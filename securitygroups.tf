@@ -4,19 +4,19 @@ resource "aws_security_group" "tf_secgroups" {
   vpc_id      = data.aws_vpc.main.id
 
   ingress {
-    description      = "HTTP"
-    from_port        = 80
-    to_port          = 80
-    protocol         = "tcp"
-    cidr_blocks      = ["89.246.68.120/32"]
+    description = "HTTP"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
-    ingress {
-    description      = "SSH"
-    from_port        = 22
-    to_port          = 22
-    protocol         = "tcp"
-    cidr_blocks      = ["89.246.68.120/32"]
+  ingress {
+    description = "SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
@@ -33,5 +33,8 @@ resource "aws_security_group" "tf_secgroups" {
 }
 
 data "aws_vpc" "main" {
-  id = "vpc-08b52f27d7b4009fa"
+  filter {
+    name   = "tag:Name"
+    values = ["my-terraform-vpc"]
+  }
 }
